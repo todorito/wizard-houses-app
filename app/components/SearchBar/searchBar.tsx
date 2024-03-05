@@ -1,18 +1,15 @@
 "use client";
 
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
 
-const SearchBar = () => {
-  //   const [searchTerm, setSearchTerm] = useState("");
+const SearchBar = ({ ...rest }: any) => {
   const searchParams = useSearchParams();
   const pathName = usePathname();
   const { replace } = useRouter();
 
-  const getHouses = (e) => {
+  const getHouses = (e: any) => {
     e.preventDefault();
     const params = new URLSearchParams(searchParams);
-    // setSearchTerm(e.target.value);
     const term = e.target.searchInput.value;
     if (term) {
       params.set("query", term);
@@ -23,12 +20,13 @@ const SearchBar = () => {
   };
   return (
     <>
-      <form onSubmit={getHouses}>
+      <form {...rest} onSubmit={getHouses} className="flex justify-center mt-2">
         <input
+          className="bg-zinc-500 text-white p-1 rounded placeholder:text-slate-300"
           name="searchInput"
           type="text"
-          placeholder="Enter the house of your choosing"
-          defaultValue={searchParams.get('query')?.toString()}
+          placeholder="Search wizard house"
+          defaultValue={searchParams.get("query")?.toString()}
         />
       </form>
     </>
